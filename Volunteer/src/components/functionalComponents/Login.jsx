@@ -7,31 +7,29 @@ const Login = () => {
             <div className="login-box">
                 <h3 className="login-title">User Login</h3>
                 <form className="login-form">
-                    <div className="input-group">
-                        <input type="email" placeholder="Email" />
+                    <div className="login-field">
+                        <input className="login-input" type="email" placeholder="Email" required />
                     </div>
-                    <div className="input-group">
-                        <input type="password" placeholder="Password" />
+                    <div className="login-field">
+                        <input className="login-input" type="password" placeholder="Password" required />
                     </div>
-                    <button type="submit" className="login-button">
-                        <Link to="/user" style={{ color: "white", textDecoration: "none" }}>Login</Link>
+                    <button className="login-button" type="submit">
+                        <Link className="login-link" to="/user">Login</Link>
                     </button>
                 </form>
             </div>
 
-            <div className="separator"></div>
-
             <div className="login-box">
                 <h3 className="login-title">Admin Login</h3>
                 <form className="login-form">
-                    <div className="input-group">
-                        <input type="email" placeholder="Email" />
+                    <div className="login-field">
+                        <input className="login-input" type="email" placeholder="Email" required />
                     </div>
-                    <div className="input-group">
-                        <input type="password" placeholder="Password" />
+                    <div className="login-field">
+                        <input className="login-input" type="password" placeholder="Password" required />
                     </div>
-                    <button type="submit" className="login-button">
-                        <Link to="/admin" style={{ color: "white", textDecoration: "none" }}>Login</Link>
+                    <button className="login-button" type="submit">
+                        <Link className="login-link" to="/admin">Login</Link>
                     </button>
                 </form>
             </div>

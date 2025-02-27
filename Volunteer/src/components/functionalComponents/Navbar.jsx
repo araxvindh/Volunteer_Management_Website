@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import "../css/navbar.css"
 const Navbar = () => {
     return (
-        <header className="navbar">
-            <nav>
+        <header className="nav-head">
+            <nav className="nav-div">
                 <ul>
-                    <li><Link to='/login' className="login-link">Login</Link></li>
+                    <button className="nav-but"><li><Link to='/login'>Login</Link></li></button>
                 </ul>
             </nav>
         </header>

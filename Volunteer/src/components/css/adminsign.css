@@ -1,87 +1,96 @@
-.admin-signin-container {
-    max-width: 350px;
-    margin: 40px auto;
+/* adminsign.css */
+
+.adminsign-container {
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.adminsign-box {
+    background: #ffffff;
+    max-width: 500px; /* Increased width */
+    width: 90%;
     padding: 20px;
-    background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+.adminsign-title {
     text-align: center;
-}
-
-.admin-signin-container h1 {
     color: #333;
-    margin-bottom: 15px;
     font-size: 22px;
+    margin-bottom: 15px;
 }
 
-.admin-signin-form {
+.adminsign-field {
     display: flex;
     flex-direction: column;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 10px;
-    text-align: left;
 }
 
-.input-group label {
-    font-size: 13px;
+.adminsign-label {
+    font-size: 14px;
     color: #555;
-    margin-bottom: 3px;
     font-weight: bold;
+    margin-bottom: 3px;
 }
 
-.input-group input {
-    padding: 8px;
+.adminsign-input {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s;
-}
-
-.input-group input:focus {
-    border-color: #007BFF;
     outline: none;
 }
 
-.signup-button {
+.adminsign-input:focus {
+    border-color: #007BFF;
+}
+
+.adminsign-button {
     width: 100%;
-    padding: 8px;
     background: #007BFF;
     color: white;
+    font-size: 16px;
+    padding: 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
     transition: background 0.3s;
     margin-top: 10px;
-    text-align: center;
 }
 
-.signup-button:hover {
+.adminsign-button:hover {
     background: #0056b3;
 }
 
-.login-link-text {
-    margin-top: 5px;
+.adminsign-text {
+    text-align: center;
     font-size: 13px;
     color: #555;
+    margin-top: 8px;
 }
 
-.login-link-text a {
+.adminsign-link {
     color: #007BFF;
     text-decoration: none;
-    font-weight: bold;
 }
 
-.login-link-text a:hover {
+.adminsign-link:hover {
     text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-    .admin-signin-container {
-        width: 90%;
+    .adminsign-box {
+        max-width: 95%;
+        padding: 15px;
     }
 }

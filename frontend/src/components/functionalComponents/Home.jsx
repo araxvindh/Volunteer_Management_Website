@@ -9,7 +9,7 @@ const Home = () => {
                 <tr>
                     <td>
                         <h1 className="home-h1">
-                            New User click here to Join the Event As Volunteer <br />
+                            New User Click here to Join the Event As Volunteer <br />
                         </h1>
                         <h1 className="home-h1"><Link to='/user-signup'>SignUp for Users</Link></h1>
                     </td>
@@ -24,10 +24,10 @@ const Home = () => {
 
                 <tr>
                     <td>
-                        <h2 className="home-h2">As a Volunteer start making your own money</h2>
+                        <h2 className="home-h2">Turn your volunteer work into value because impact deserves income. </h2>
                     </td>
                     <td>
-                        <h2 className="home-h2">Easy to find your teammates to host your event successfully</h2>
+                        <h2 className="home-h2">Behind every successful event is a team that works together seamlessly.</h2>
                     </td>
                 </tr>
             </table>

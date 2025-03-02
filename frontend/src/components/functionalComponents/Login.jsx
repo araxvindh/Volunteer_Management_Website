@@ -42,10 +42,13 @@ const Login = () => {
     
                 const message = req.data.message
                 const islogin = req.data.isLogin
+                const host_id = req.data.admin_id
+                console.log({host_id})
                 if (islogin) {
                  console.log(islogin,message)
                     alert(message)
                     navigate('/admin')
+                    localStorage.setItem('host_id',host_id)
                 }
                 else {
                     console.log(islogin,message)
@@ -79,7 +82,7 @@ const Login = () => {
                     <div className="login-field">
                         <input className="login-input" type="password" placeholder="Password" required id="password1" value={password1} onChange={(e)=>{setPass1(e.target.value)}}/>
                     </div>
-                    <button className="login-button" type="submit">
+                    <button className="login-button" type="submit" >
                                             Login
                     </button>
                 </form>

@@ -45,7 +45,6 @@ mdb
         }
     });
 
-
     app.post("/userlogin", async(req,res) =>
         {
             try{
@@ -106,7 +105,6 @@ mdb
                     
                     console.log(req.body);
                     const user = await admin_sign.findOne({"email":email})
-                    console.log(user._id);
                     if(user)
                     {   
                         const isValidPassword= await bcrypt.compare(password,user.password);
@@ -114,7 +112,8 @@ mdb
             
                         if(isValidPassword)
                         {
-                            res.status(201).json({message:"Login Successful",isLogin:true, host_id:user._id})
+                            res.status(201).json({message:"Login Successful",isLogin:true,admin_id:user._id})
+
                         }
                         else
                         {
@@ -144,7 +143,7 @@ mdb
                 place:place,
                 date:date,
                 volunteer:volunteer,
-                //adminId:adminId
+                hostId:req.body.hostId
             });
             event1.save();
             console.log("EVENT CREATED");
@@ -156,12 +155,11 @@ mdb
         }
     })
 
-
     app.get("/events", async(req,res)=>
     {
         try{
 
-            const eventDetail=await event_Db.find();
+            const eventDetail =await event_Db.find();
 
             res.status(201).json(eventDetail);
         }catch(error)
@@ -172,7 +170,26 @@ mdb
     }
     )
 
-    app.get("/admins")
+    app.put("/events/:id/join", async (req, res) => {
+        try {
+          const event = await event_Db.findById(req.params.id);
+          if (!event) {
+            return res.status(404).json({ message: "Event not found" });
+          }
+      
+          if (event.volunteer > 0) {
+            event.volunteer -= 1
+            await event.save();
+            res.json({ message: "Volunteer count updated", event });
+          } else {
+            res.status(400).json({ message: "No volunteers needed" });
+          }
+        } catch (error) {
+          res.status(500).json({ message: "Server error", error });
+        }
+      });
+      
 
 
 app.listen(PORT, () => console.log("Server Started Successfully"));
+

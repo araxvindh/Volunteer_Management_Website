@@ -18,7 +18,8 @@ const AdminControl = () => {
                 location: location,
                 place: place,
                 date: date,
-                volunteer: volunteer
+                volunteer: volunteer,
+                hostId:localStorage.getItem('host_id')
               });
               const message=req.data.message;
               const created=req.data.isCreated;
@@ -49,7 +50,7 @@ const AdminControl = () => {
     <div>
       <header>
         <nav>
-          <button>
+          <button onClick={(e)=>{localStorage.clear()}}>
             <Link to="/">Logout</Link>
           </button>
         </nav>
@@ -109,38 +110,46 @@ const AdminControl = () => {
           </form>
             )
     }
-
     <button onClick={(e)=>{setshowData(true)}}>Show my DataBase</button>
       {showData &&<form>
         <div>
-          {events.map((event, index) => (
-            <div key={index} style={{ display: "grid-inline", border: "1px solid black", padding: "10px" }}>
-              <tr>
-                <th>Event Name :</th>
-                <td>{event.companyName}</td>
-              </tr>
-              <br />
-              <tr>
-                <th>Location :</th>
-                <td>{event.location}</td>
-              </tr>
-              <br />
-              <tr>
-                <th>Place :</th>
-                <td>{event.place}</td>
-              </tr>
-              <br />
-              <tr>
-                <th>Date :</th>
-                <td>{event.date}</td>
-              </tr>
-              <br />
-              <tr>
-                <th>No Volunteer Required :</th>
-                <td>{event.volunteer}</td>
-              </tr>
+          
+        {events.filter(event => (event.hostId)==localStorage.getItem('host_id')).length > 0 ? (
+            events
+                .filter(event => event.hostId == localStorage.getItem('host_id'))
+                .map((event, index) => (
+                    <div key={index} style={{display:"grid-inline",border:"1px solid black",padding:"10px"}}>
+                        <div>
+                        <span>Event Name :</span>
+                        <span>{event.companyName}</span>
+                        </div>
+                        <br />
+                        <div>
+                        <span>Location :</span>
+                        <span>{event.location}</span>
+                        </div>
+                        <br />
+                        <div>
+                        <span>Place :</span>
+                        <span>{event.place}</span>
+                        </div>
+                        <br />
+                        <div>
+                        <span>Date :</span>
+                        <span>{event.date}</span>
+                        </div>
+                        <br />
+                        <div>
+                        <span>No Volunteer Required :</span>
+                        <span>{event.volunteer}</span>
+                        </div>
+                    </div>
+                ))
+        ) : (
+            <div>
+                <span style={{ textAlign: "center" }}>No events</span>
             </div>
-          ))}
+        )}
         </div>
       </form>}
     </div>

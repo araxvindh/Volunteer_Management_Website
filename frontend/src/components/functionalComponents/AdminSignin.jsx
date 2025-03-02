@@ -21,12 +21,10 @@ const AdminSignin = () => {
                 });
             const message = req.data.message
             const isSignup = req.data.isSignup
-            const host_id = req.data.host_id;
             if (isSignup) {
              console.log(isSignup,message)
                 alert(message)
                 navigate('/login')
-                localStorage.setItem('host_id',host_id);
             }
             else {
                 console.log(isSignup,message)

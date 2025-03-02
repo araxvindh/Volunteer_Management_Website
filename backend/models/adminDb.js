@@ -7,6 +7,7 @@ const event=mdb.Schema(
         place:String,
         date:String,
         volunteer:Number,
+        hostId:String
     }
 )
 

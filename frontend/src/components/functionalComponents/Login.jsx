@@ -20,10 +20,12 @@ const Login = () => {
 
             const message = req.data.message
             const islogin = req.data.isLogin
+            const user_id = req.data.user_id
             if (islogin) {
              console.log(islogin,message)
                 alert(message)
                 navigate('/user')
+                localStorage.setItem('user_id',user_id)
             }
             else {
                 console.log(islogin,message)

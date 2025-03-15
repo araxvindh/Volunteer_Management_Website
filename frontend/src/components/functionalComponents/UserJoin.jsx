@@ -6,12 +6,13 @@ const UserJoin = () => {
   const [events, setEvents] = useState([]);
   const [location, setLocation] = useState("");
   const [joinedEvents, setJoinedEvents] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const response = await axios.get("http://localhost:3001/events");
         setEvents(response.data);
+        
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -23,19 +24,26 @@ const UserJoin = () => {
     if (joinedEvents.includes(index)) return; 
 
     try {
-      
-      await axios.put(`http://localhost:3001/events/${eventId}/join`);
+      const userId = localStorage.getItem('user_id');
+
+      await axios.put(`http://localhost:3001/events/${eventId}/join`, { userId });
+
       setEvents((prevEvents) =>
         prevEvents.map((event, i) =>
-          (i === index)&& (event._id ==eventId) ? { ...event, volunteer: event.volunteer - 1 } : event
+          i === index && event._id === eventId
+            ? { ...event, volunteer: event.volunteer - 1 }
+            : event
         )
       );
 
       setJoinedEvents((prev) => [...prev, eventId]);
+
+      console.log("UserId added to event successfully");
+
     } catch (error) {
       console.error("Error updating event:", error);
     }
-  };
+};
 
   return (
     <div>

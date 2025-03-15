@@ -7,9 +7,12 @@ const event=mdb.Schema(
         place:String,
         date:String,
         volunteer:Number,
-        hostId:String
+        hostId:String,
+        volunteers: [{ type: mdb.Schema.Types.ObjectId, ref: "User" }]
     }
 )
 
 const event_Db=mdb.model("adminDb",event)
 module.exports=event_Db
+
+

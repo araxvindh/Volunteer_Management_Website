@@ -58,7 +58,7 @@ mdb
         
                     if(isValidPassword)
                     {
-                        res.status(201).json({message:"Login Successful",isLogin:true})
+                        res.status(201).json({message:"Login Successful",isLogin:true,user_id:user._id})
                     }
                     else
                     {
@@ -143,7 +143,9 @@ mdb
                 place:place,
                 date:date,
                 volunteer:volunteer,
-                hostId:req.body.hostId
+                hostId:req.body.hostId,
+                userId:req.body.userId
+
             });
             event1.save();
             console.log("EVENT CREATED");
@@ -171,23 +173,47 @@ mdb
     )
 
     app.put("/events/:id/join", async (req, res) => {
-        try {
-          const event = await event_Db.findById(req.params.id);
-          if (!event) {
+    try {
+        const { userId } = req.body; 
+        const event = await event_Db.findById(req.params.id);
+
+        if (!event) {
             return res.status(404).json({ message: "Event not found" });
-          }
-      
-          if (event.volunteer > 0) {
-            event.volunteer -= 1
-            await event.save();
-            res.json({ message: "Volunteer count updated", event });
-          } else {
-            res.status(400).json({ message: "No volunteers needed" });
-          }
-        } catch (error) {
-          res.status(500).json({ message: "Server error", error });
         }
-      });
+
+        
+        if (event.volunteers.includes(userId)) {
+            return res.status(400).json({ message: "User already joined this event" });
+        }
+
+        if (event.volunteer > 0) {
+            event.volunteer -= 1; // Decrease available volunteer spots
+            event.volunteers.push(userId); // Add userId to volunteers array
+
+            await event.save();
+            res.json({ message: "User joined successfully", event });
+        } else {
+            res.status(400).json({ message: "No volunteers needed" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error });
+    }
+});
+
+app.get("/userdetails", async(req,res)=>
+{
+    try{
+
+        const userDetail =await user_sign.find();
+
+        res.status(201).json(userDetail);
+    }catch(error)
+    {
+        console.log("ERROR",error);
+        res.status(201).json({message:"Not able to fetch  ",isCreated:false});
+    }
+}
+)
       
 
 

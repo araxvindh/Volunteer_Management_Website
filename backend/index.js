@@ -214,8 +214,39 @@ app.get("/userdetails", async(req,res)=>
     }
 }
 )
-      
+app.put('/events/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { location, place, volunteer } = req.body;
 
+        const updatedEvent = await event_Db.findByIdAndUpdate(
+            id,
+            { location, place, volunteer },
+            { new: true }
+        );
+
+        if (!updatedEvent) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+
+        res.json({ message: "Event updated successfully", updatedEvent });
+    } catch (error) {
+        console.error("Error updating event:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+   
+app.delete("/events/:id", async (req, res) => {
+    try {
+        const deletedEvent = await event_Db.findByIdAndDelete(req.params.id);
+        if (!deletedEvent) {
+            return res.status(404).json({ message: "Event not found" });
+        }
+        res.json({ message: "Event deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting event", error });
+    }
+});
 
 app.listen(PORT, () => console.log("Server Started Successfully"));
 

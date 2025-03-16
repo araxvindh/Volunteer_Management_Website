@@ -187,8 +187,8 @@ mdb
         }
 
         if (event.volunteer > 0) {
-            event.volunteer -= 1; // Decrease available volunteer spots
-            event.volunteers.push(userId); // Add userId to volunteers array
+            event.volunteer -= 1; 
+            event.volunteers.push(userId); 
 
             await event.save();
             res.json({ message: "User joined successfully", event });

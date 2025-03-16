@@ -61,7 +61,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-box">
-                <h3 className="login-title">User Login</h3>
+                <h3 className="login-title">Student Login</h3>
                 <form className="login-form"  onSubmit={handleuserLogin}>
                     <div className="login-field">
                         <input className="login-input" type="email" placeholder="Email" required id="email" value={email}  onChange={(e)=>{setEmail(e.target.value)}}/>
@@ -76,7 +76,7 @@ const Login = () => {
             </div>
 
             <div className="login-box">
-                <h3 className="login-title">Host Login</h3>
+                <h3 className="login-title">Faculty Login</h3>
                 <form className="login-form" onSubmit={handleadminLogin}>
                     <div className="login-field">
                         <input className="login-input" type="email" placeholder="Email" required id="email1" value={email1}  onChange={(e)=>{setEmail1(e.target.value)}} />

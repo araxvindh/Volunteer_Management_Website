@@ -5,7 +5,7 @@ const Navbar = () => {
         <header className="nav-head">
             <nav className="nav-div">
                 <ul>
-                    <button className="nav-but"><li><Link to='/login'>Login</Link></li></button>
+                    <button className="nav-but"><li><Link to='/'>Login</Link></li></button>
                 </ul>
             </nav>
         </header>

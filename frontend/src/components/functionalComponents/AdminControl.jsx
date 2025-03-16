@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import '../css/adminControl.css';
 
 const AdminControl = () => {
-    const [showForm, setshowForm] = useState(false);
-    const [showData, setshowData] = useState(false);
-    const [showuser, setshowuser] = useState(false);
-    const [editMode, setEditMode] = useState(null); // Stores event ID for editing
+    const [showForm, setShowForm] = useState(false);
+    const [showData, setShowData] = useState(false);
+    const [showUser, setShowUser] = useState(false);
+    const [editMode, setEditMode] = useState(null);
     const [companyName, setName] = useState("");
     const [location, setLocation] = useState("");
     const [place, setPlace] = useState("");
@@ -15,7 +16,6 @@ const AdminControl = () => {
     const [events, setEvents] = useState([]);
     const [users, setUsers] = useState([]);
 
-    // Fetch events
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +28,6 @@ const AdminControl = () => {
         fetchData();
     }, []);
 
-    // Fetch users
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -41,7 +40,6 @@ const AdminControl = () => {
         fetchData();
     }, []);
 
-    // Create event
     const handleCreate = async (event) => {
         event.preventDefault();
         try {
@@ -55,7 +53,7 @@ const AdminControl = () => {
             });
             if (req.data.isCreated) {
                 alert("Event created successfully");
-                setshowForm(false);
+                setShowForm(false);
                 setEvents([...events, req.data.event]);
             } else {
                 alert("Failed to create the event");
@@ -65,7 +63,6 @@ const AdminControl = () => {
         }
     };
 
-    // Delete event
     const handleDelete = async (id) => {
         try {
             await axios.delete(`http://localhost:3001/events/${id}`);
@@ -100,92 +97,92 @@ const AdminControl = () => {
     };
 
     return (
-        <div>
-            <header>
-                <nav>
-                    <button onClick={() => localStorage.clear()}>
-                        <Link to="/">Logout</Link>
+        <div className="admin-control-container">
+            <header className="admin-header">
+                <nav className="admin-nav">
+                    <button onClick={() => localStorage.clear()} className="logout-button">
+                        <Link to="/" className="logout-link">Logout</Link>
                     </button>
                 </nav>
             </header>
 
-            <h2>Admin Control</h2>
-            <h3>Needed Volunteer for Events</h3>
-            <button onClick={() => setshowForm(true)}>Hire Volunteer</button>
+            <h2 className="admin-title">Admin DashBoard</h2>
+            {/* <h3 className="volunteer-heading">Needed Volunteer for Events</h3> */}
+            <button onClick={() => setShowForm(true)} className="create-event-button">Add Event Details</button>
 
             {showForm && (
-                <form onSubmit={handleCreate}>
-                    <table>
-                        <tr>
-                            <td><label htmlFor="Event">Event Name :</label></td>
-                            <td><input type="text" placeholder="Event Name" value={companyName} onChange={(e) => setName(e.target.value)} /></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor="Location">Location :</label></td>
-                            <td><input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} /></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor="Place">Place :</label></td>
-                            <td><input type="text" placeholder="Place" value={place} onChange={(e) => setPlace(e.target.value)} /></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor="date">Date :</label></td>
-                            <td><input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></td>
-                        </tr>
-                        <tr>
-                            <td><label htmlFor="volunteer">Required Volunteers:</label></td>
-                            <td><input type="number" value={volunteer} onChange={(e) => setVol(e.target.value)} /></td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" /><label>Confirm Event</label></td>
-                        </tr>
-                        <button type="submit">Submit</button>
+                <form onSubmit={handleCreate} className="event-form">
+                    <table className="event-table">
+                        <tbody>
+                            <tr>
+                                <td><label htmlFor="Event" className="label">Event Name :</label></td>
+                                <td><input type="text" className="input-field" placeholder="Event Name" value={companyName} onChange={(e) => setName(e.target.value)} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="Location" className="label">Location :</label></td>
+                                <td><input type="text" className="input-field" placeholder="College Name" value={location} onChange={(e) => setLocation(e.target.value)} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="Place" className="label">Place :</label></td>
+                                <td><input type="text" className="input-field" placeholder="Place" value={place} onChange={(e) => setPlace(e.target.value)} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="date" className="label">Date :</label></td>
+                                <td><input type="date" className="input-field" value={date} onChange={(e) => setDate(e.target.value)} /></td>
+                            </tr>
+                            <tr>
+                                <td><label htmlFor="volunteer" className="label">Required Volunteers:</label></td>
+                                <td><input type="number" className="input-field" value={volunteer} onChange={(e) => setVol(e.target.value)} /></td>
+                            </tr>
+
+                            <button type="submit" className="submit-button">Submit</button>
+                        </tbody>
                     </table>
                 </form>
             )}
 
-            <button onClick={() => setshowData(true)}>Show my Database</button>
+            <button onClick={() => setShowData(true)} className="show-data-button">Show my Database</button>
 
             {showData && (
-                <div>
+                <div className="events-container">
                     {events.filter(event => event.hostId === localStorage.getItem("host_id")).length > 0 ? (
                         events
                             .filter(event => event.hostId === localStorage.getItem("host_id"))
                             .map((event, index) => (
-                                <div key={index} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
-                                    <div><span>Event Name:</span> <span>{event.companyName}</span></div>
-                                    <div><span>Location:</span> <span>{event.location}</span></div>
-                                    <div><span>Place:</span> <span>{event.place}</span></div>
-                                    <div><span>Date:</span> <span>{event.date}</span></div>
-                                    <div><span>No of Volunteers:</span> <span>{event.volunteer}</span></div>
+                                <div key={index} className="event-card">
+                                    <div><span className="event-label">Event Name:</span> <span>{event.companyName}</span></div>
+                                    <div><span className="event-label">College Name:</span> <span>{event.location}</span></div>
+                                    <div><span className="event-label">Place:</span> <span>{event.place}</span></div>
+                                    <div><span className="event-label">Date:</span> <span>{event.date}</span></div>
+                                    <div><span className="event-label">No of Volunteers:</span> <span>{event.volunteer}</span></div>
 
-                                    <button onClick={() => setshowuser(!showuser)}>Joined Volunteers</button>
+                                    <button onClick={() => setShowUser(!showUser)} className="show-volunteers-button">Joined Volunteers</button>
 
-                                    {showuser && (
-                                        <div>
+                                    {showUser && (
+                                        <div className="volunteers-list">
                                             {users.filter(user => event.volunteers.includes(user._id)).map((user, index) => (
-                                                <div key={index} style={{ border: "1px solid black", padding: "10px" }}>
-                                                    <div><span>First Name:</span> <span>{user.firstName}</span></div>
-                                                    <div><span>Last Name:</span> <span>{user.lastName}</span></div>
-                                                    <div><span>Email:</span> <span>{user.email}</span></div>
-                                                    <div><span>Phone Number:</span> <span>{user.phoneNumber}</span></div>
+                                                <div key={index} className="user-card">
+                                                    <div><span className="user-label">First Name:</span> <span>{user.firstName}</span></div>
+                                                    <div><span className="user-label">Last Name:</span> <span>{user.lastName}</span></div>
+                                                    <div><span className="user-label">Email:</span> <span>{user.email}</span></div>
+                                                    <div><span className="user-label">Phone Number:</span> <span>{user.phoneNumber}</span></div>
                                                 </div>
                                             ))}
                                         </div>
                                     )}
 
                                     {editMode === event._id ? (
-                                        <div>
-                                            <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-                                            <input type="text" value={place} onChange={(e) => setPlace(e.target.value)} />
-                                            <input type="number" value={volunteer} onChange={(e) => setVol(e.target.value)} />
-                                            <button onClick={() => handleUpdate(event._id)}>Save</button>
-                                            <button onClick={() => setEditMode(null)}>Cancel</button>
+                                        <div className="edit-event-form">
+                                            <input type="text" className="input-field" value={location} onChange={(e) => setLocation(e.target.value)} />
+                                            <input type="text" className="input-field" value={place} onChange={(e) => setPlace(e.target.value)} />
+                                            <input type="number" className="input-field" value={volunteer} onChange={(e) => setVol(e.target.value)} />
+                                            <button onClick={() => handleUpdate(event._id)} className="save-button">Save</button>
+                                            <button onClick={() => setEditMode(null)} className="cancel-button">Cancel</button>
                                         </div>
                                     ) : (
-                                        <div>
-                                            <button onClick={() => enableEdit(event)}>Edit</button>
-                                            <button onClick={() => handleDelete(event._id)}>Delete</button>
+                                        <div className="event-actions">
+                                            <button onClick={() => enableEdit(event)} className="edit-button">Edit</button>
+                                            <button onClick={() => handleDelete(event._id)} className="delete-button">Delete</button>
                                         </div>
                                     )}
                                 </div>

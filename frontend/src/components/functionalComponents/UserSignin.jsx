@@ -82,7 +82,7 @@ const UserSignin = () =>
                     <button className="usersign-button" type="submit">Sign In</button>
 
                     <p className="usersign-text">
-                        Already have an account? <Link className="usersign-link" to='/login'>Login</Link>
+                        Already have an account? <Link className="usersign-link" to='/'>Login</Link>
                     </p>
                 </form>
             </div>

@@ -67,76 +67,6 @@
     background-color: #0056b3;
 }
 
-.event-form {
-    margin-top: 30px;
-    width: 100%;
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.event-form .form-section {
-    margin-bottom: 25px;
-}
-
-.event-form .form-section:last-child {
-    margin-bottom: 0;
-}
-
-.event-form .section-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.event-form .input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.event-form .input-group label {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-}
-
-.event-form .input-group input,
-.event-form .input-group select,
-.event-form .input-group textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #f8f9fa;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border-color 0.3s ease-in-out;
-}
-
-.event-form .input-group input:focus,
-.event-form .input-group select:focus,
-.event-form .input-group textarea:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-.event-form .input-group textarea {
-    resize: vertical;
-    height: 150px;
-}
-
-.event-form .checkbox-group {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.event-form .checkbox-group input {
-    margin-right: 10px;
-}
 
 .submit-button {
     background-color: #007BFF;
@@ -171,24 +101,7 @@
     background-color: #e2e6ea;
 }
 
-.event-form .form-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
 
-.event-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.event-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-    background-color: #fafafa;
-}
 
 .label {
     font-weight: bold;
@@ -281,23 +194,7 @@
     font-weight: bold;
     color: #333;
 }
-.event-form {
-    margin-top: 30px;
-    width: 100%;
-    max-width: 600px; /* Adjust width as needed */
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Center the form */
-}
 
-.event-form .form-footer {
-    display: flex;
-    justify-content: center; /* Center the submit button */
-    align-items: center;
-    margin-top: 20px;
-}
 
 .submit-button {
     background-color: #007BFF;
@@ -313,4 +210,106 @@
 
 .submit-button:hover {
     background-color: #0056b3;
+}
+
+
+.event-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f9;
+    font-family: Arial, sans-serif;
+}
+
+.event-box {
+    background: #ffffff;
+    width: 35%;  
+    max-width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 10px;  
+}
+
+.event-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.event-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event-field {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.event-input, .event-select, .event-textarea {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    text-align: center;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.event-input:focus, .event-select:focus, .event-textarea:focus {
+    border-color: #007BFF;
+}
+
+.event-textarea {
+    resize: vertical;
+    height: 150px;
+}
+
+.event-button {
+    width: 85%;
+    background: #007BFF;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.event-button:hover {
+    background: #0056b3;
+}
+
+.event-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.event-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    background-color: #fafafa;
+}
+
+@media (max-width: 768px) {
+    .event-container {
+        flex-direction: column; 
+    }
+
+    .event-box {
+        width: 90%;
+    }
+
+    .event-input, .event-select, .event-textarea {
+        width: 90%;
+    }
 }

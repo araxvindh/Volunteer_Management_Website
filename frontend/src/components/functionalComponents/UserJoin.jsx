@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../css/userJoin.css';
+import '../css/userjoin.css';
 
 const UserJoin = () => {
   const [events, setEvents] = useState([]);
@@ -20,7 +20,7 @@ const UserJoin = () => {
     fetchData();
   }, []);
 
-  // Check if the event contains the user ID in the volunteers list
+
   const checkIfJoined = (event) => {
     const userId = localStorage.getItem('user_id');
     return event.volunteers && event.volunteers.includes(userId);
@@ -39,7 +39,6 @@ const UserJoin = () => {
         )
       );
 
-      // Add to the joinedEvents list
       setJoinedEvents((prev) => [...prev, eventId]);
 
       console.log("UserId added to event successfully");
@@ -52,7 +51,7 @@ const UserJoin = () => {
     ? events.filter((event) => event.location.toLowerCase().includes(location.toLowerCase()))
     : events;
 
-  // Separate events into available and joined based on the volunteers array in DB
+ 
   const availableEvents = filteredEvents.filter(event => !checkIfJoined(event));
   const joinedEventList = filteredEvents.filter(event => checkIfJoined(event));
 
@@ -67,7 +66,7 @@ const UserJoin = () => {
       </header>
 
       <h2 className="page-title">Student Page</h2>
-      <label htmlFor="Location" className="location-label">Search</label>
+      <label htmlFor="Location" className="location-label"></label>
       <input
         type="text"
         placeholder="College Name"
@@ -106,7 +105,6 @@ const UserJoin = () => {
             <p><strong>Location:</strong> {event.location}</p>
             <p><strong>Place:</strong> {event.place}</p>
             <p><strong>Date:</strong> {event.date}</p>
-            <p><strong>No Volunteer Required:</strong> {event.volunteer}</p>
             <button disabled className="join-button">
               Joined
             </button>

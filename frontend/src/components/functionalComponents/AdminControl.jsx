@@ -107,9 +107,19 @@ const AdminControl = () => {
             </header>
 
             <h2 className="admin-title">Admin DashBoard</h2>
-            {/* <h3 className="volunteer-heading">Needed Volunteer for Events</h3> */}
-            <button onClick={() => setShowForm(true)} className="create-event-button">Add Event Details</button>
 
+            {/* Add space between buttons */}
+            <div className="button-container">
+                <button onClick={() => setShowForm(!showForm)} className="create-event-button">
+                    {showForm ? "Close Add Event Details" : "Add Event Details"}
+                </button>
+                <div className="space"></div> {/* Space between buttons */}
+                <button onClick={() => setShowData(!showData)} className="show-data-button">
+                    {showData ? "Close my Database" : "Show my Database"}
+                </button>
+            </div>
+
+            {/* Show form to add event */}
             {showForm && (
                 <form onSubmit={handleCreate} className="event-form">
                     <table className="event-table">
@@ -141,8 +151,7 @@ const AdminControl = () => {
                 </form>
             )}
 
-            <button onClick={() => setShowData(true)} className="show-data-button">Show my Database</button>
-
+            {/* Show event data */}
             {showData && (
                 <div className="events-container">
                     {events.filter(event => event.hostId === localStorage.getItem("host_id")).length > 0 ? (

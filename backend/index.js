@@ -248,5 +248,10 @@ app.delete("/events/:id", async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log("Server Started Successfully"));
 
+
+if (require.main === module) {
+    app.listen(PORT, () => console.log("Server Started Successfully"));
+}
+
+module.exports = app;

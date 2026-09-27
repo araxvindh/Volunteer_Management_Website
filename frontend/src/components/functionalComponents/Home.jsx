@@ -9,25 +9,26 @@ const Home = () => {
                 <tr>
                     <td>
                         <h1 className="home-h1">
-                            New User Click here to Join the Event As Volunteer <br />
+                            New User for Students <br />
                         </h1>
-                        <h1 className="home-h1"><Link to='/user-signup'>SignUp for Users</Link></h1>
+                        <h1 className="home-h1"><Link to='/user-signup'>SignUp for Students</Link></h1>
                     </td>
                         
                     <td>
                         <h1 className="home-h1">
-                            New Event Coordinator Click here to Hire a Volunteer <br />
+                            New Admin for coordinator <br />
+                             
                         </h1> 
-                        <h1 className="home-h1"><Link to='/admin-signup'>SignUp for Event Hosts</Link></h1>
+                        <h1 className="home-h1"><Link to='/admin-signup'>SignUp for Admin</Link></h1>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        <h2 className="home-h2">Turn your volunteer work into value because impact deserves income. </h2>
+                        <h2 className="home-h2">Turn your volunteer work into value coordinator. </h2>
                     </td>
                     <td>
-                        <h2 className="home-h2">Behind every successful event is a team that works together seamlessly.</h2>
+                        <h2 className="home-h2"> Team that works together seamlessly.</h2>
                     </td>
                 </tr>
             </table>

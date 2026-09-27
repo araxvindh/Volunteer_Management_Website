@@ -36,10 +36,10 @@ const AdminSignin = () => {
             <Navbar></Navbar>
                      <div className="adminsign-container">
             <div className="adminsign-box">
-                <h1 className="adminsign-title">SignUp for the Host </h1>
+                <h1 className="adminsign-title">SignUp for the Admin </h1>
                 <form onSubmit={handleadminSign}>
                     <div className="adminsign-field">
-                        <label className="adminsign-label">Event Company Name</label>
+                        <label className="adminsign-label">Name of Faculty</label>
                         <input className="adminsign-input" type="text" placeholder="Event Company Name" required id="firstName" value={firstName} onChange={(e)=>{setFName(e.target.value)}} />
                     </div>
 
@@ -69,7 +69,7 @@ const AdminSignin = () => {
 
                     <div className="adminsign-text">
                         <h3>
-                            Already have an account? <Link className="adminsign-link" to="/login">Login</Link>
+                            Already have an account? <Link className="adminsign-link" to="/">Login</Link>
                         </h3>
                     </div>
                 </form>

@@ -76,7 +76,7 @@ const Login = () => {
             </div>
 
             <div className="login-box">
-                <h3 className="login-title">Faculty Login</h3>
+                <h3 className="login-title">Admin Login</h3>
                 <form className="login-form" onSubmit={handleadminLogin}>
                     <div className="login-field">
                         <input className="login-input" type="email" placeholder="Email" required id="email1" value={email1}  onChange={(e)=>{setEmail1(e.target.value)}} />

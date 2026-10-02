@@ -14,13 +14,12 @@ const PORT = 3001;
 
 dotenv.config();
 
-mdb
-    .connect(process.env.MONGODB_URL)  
+mdb.connect(process.env.MONGODB_URL)
     .then(() => {
-        console.log("MDB Connection Successful");
+        console.log("MongoDB Connection Successful");
     })
     .catch((err) => {
-        console.log("Check yout Connection", err);
+        console.error("MongoDB Connection Failed:", err);
     });
 
 
@@ -36,7 +35,7 @@ mdb
                 phoneNumber: phoneNumber,
                 password: hashedpass
             });
-            usersign.save();
+            await usersign.save();
             console.log("SIGNUP SUCCESS");
             res.status(201).json({ message: "SIGNUP DONE", isSignup: true });
         } catch (error) {
@@ -88,7 +87,7 @@ mdb
                     phoneNumber: phoneNumber,
                     password: hashedpass
                 });
-                adminsign.save();
+                await adminsign.save();
                 console.log("SIGNUP SUCCESS");
                 res.status(201).json({ message: "SIGNUP DONE", isSignup: true });
             } catch (error) {
@@ -147,7 +146,7 @@ mdb
                 userId:req.body.userId
 
             });
-            event1.save();
+           await event1.save();
             console.log("EVENT CREATED");
             res.status(201).json({message:"EVENT CREATED",isCreated:true});
         }catch(error)

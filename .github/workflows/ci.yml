@@ -43,12 +43,12 @@ jobs:
       - name: Seed MongoDB
         working-directory: ./backend
         env:
-          MONGO_URI: mongodb://localhost:27017/
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: node seedtaskdata.js
 
       # Run Jest + Supertest
       - name: Run tests
         working-directory: ./backend
         env:
-          MONGO_URI: mongodb://localhost:27017/
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: npm test

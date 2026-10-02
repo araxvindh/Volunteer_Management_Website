@@ -1,85 +1,99 @@
 const mongoose = require("mongoose");
 
-const User = require("./models/usersign");
-const Admin = require("./models/adminsign");
-const Event = require("./models/adminDb");
+const user_sign = require("./models/usersign");
+const admin_sign = require("./models/adminsign");
+const event_Db = require("./models/adminDb");
 
-const MONGO_URI =
-    process.env.MONGO_URI || "mongodb://127.0.0.1:27017/volunteer_management";
+const MONGODB_URL = process.env.MONGODB_URL;
 
-const seedData = async () => {
+if (!MONGODB_URL) {
+    console.error("❌ MONGODB_URL is not defined");
+    process.exit(1);
+}
+
+async function seedDatabase() {
     try {
-        await mongoose.connect(MONGO_URI);
+        console.log("Connecting to MongoDB...");
 
-        console.log("MongoDB connected");
+        await mongoose.connect(MONGODB_URL);
 
-        // Clear existing test data
-        await User.deleteMany({});
-        await Admin.deleteMany({});
-        await Event.deleteMany({});
+        console.log("✅ MongoDB connected");
 
-        // -----------------------------
-        // SEED USER
-        // -----------------------------
-        const user = await User.create({
+        // Remove old CI test data
+        await user_sign.deleteMany({
+            email: "ciuser@gmail.com"
+        });
+
+        await admin_sign.deleteMany({
+            email: "ciadmin@gmail.com"
+        });
+
+        await event_Db.deleteMany({
+            companyName: "CI Test Company"
+        });
+
+        // -------------------------
+        // CREATE TEST USER
+        // -------------------------
+
+        const user = await user_sign.create({
             firstName: "CI",
             lastName: "Test User",
             email: "ciuser@gmail.com",
             password: "Test@123",
-            phoneNumber: "9876543210"
+            phoneNumber: 9876543210
         });
 
-        console.log("User seeded");
+        console.log("✅ Test user created");
 
-        // -----------------------------
-        // SEED ADMIN
-        // -----------------------------
-        const admin = await Admin.create({
-            firstName: "CI Admin",
+        // -------------------------
+        // CREATE TEST ADMIN
+        // -------------------------
+
+        const admin = await admin_sign.create({
+            firstName: "CI",
+            lastName: "Admin",
             email: "ciadmin@gmail.com",
             password: "Admin@123",
-            phoneNumber: "9876543211"
+            phoneNumber: 9876543211
         });
 
-        console.log("Admin seeded");
+        console.log("✅ Test admin created");
 
-        // -----------------------------
-        // SEED EVENTS
-        // -----------------------------
-        await Event.insertMany([
-            {
-                companyName: "CI Test Company",
-                location: "Chennai",
-                place: "St Joseph",
-                date: "2026-10-01",
-                volunteer: 10,
-                hostId: admin._id,
-                userId: user._id
-            },
-            {
-                companyName: "Tech Volunteers",
-                location: "Chennai",
-                place: "Anna Nagar",
-                date: "2026-10-05",
-                volunteer: 20,
-                hostId: admin._id,
-                userId: user._id
-            }
-        ]);
+        // -------------------------
+        // CREATE TEST EVENT
+        // -------------------------
 
-        console.log("Events seeded");
+        await event_Db.create({
+            companyName: "CI Test Company",
+            location: "Chennai",
+            place: "St Joseph",
+            date: "2026-10-01",
+            volunteer: 10,
+            hostId: admin._id.toString(),
+            volunteers: []
+        });
 
-        console.log("✅ Seed data inserted successfully");
+        console.log("✅ Test event created");
+
+        console.log("================================");
+        console.log("✅ DATABASE SEED SUCCESSFUL");
+        console.log("================================");
 
         await mongoose.connection.close();
+
         process.exit(0);
 
     } catch (error) {
-        console.error("❌ Seed failed:", error);
+        console.error("================================");
+        console.error("❌ DATABASE SEED FAILED");
+        console.error(error);
+        console.error("================================");
 
         await mongoose.connection.close();
+
         process.exit(1);
     }
-};
+}
 
-seedData();
+seedDatabase();

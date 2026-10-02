@@ -8,7 +8,7 @@ const event=mdb.Schema(
         date:String,
         volunteer:Number,
         hostId:String,
-        volunteers: [{ type: mdb.Schema.Types.ObjectId, ref: "User" }]
+        volunteers: [{ type: mdb.Schema.Types.ObjectId, ref: "userSign" }]
     }
 )
 

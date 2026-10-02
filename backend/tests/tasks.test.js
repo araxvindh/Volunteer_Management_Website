@@ -1,5 +1,14 @@
 const request = require("supertest");
-const app = require("../index");
+const mongoose = require("mongoose");
+const { app, connectDB } = require("../index");
+
+beforeAll(async () => {
+    await connectDB();
+});
+
+afterAll(async () => {
+    await mongoose.connection.close();
+});
 
 describe("Volunteer Management API", () => {
 

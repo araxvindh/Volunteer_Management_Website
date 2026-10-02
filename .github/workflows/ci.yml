@@ -7,48 +7,30 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      mongo:
-        image: mongo:latest
-        ports:
-          - 27017:27017
+    timeout-minutes: 10
 
     steps:
-      # Checkout repository
+
       - name: Checkout code
         uses: actions/checkout@v5
 
-      # Setup Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v5
         with:
           node-version: "18"
 
-      # Wait for MongoDB
-      - name: Wait for MongoDB
-        run: |
-          while ! nc -z localhost 27017; do
-            echo "Waiting for MongoDB to be ready..."
-            sleep 2
-          done
-          echo "MongoDB is ready!"
-
-      # Install backend dependencies
       - name: Install dependencies
         working-directory: ./backend
         run: npm install
 
-      # Seed MongoDB
       - name: Seed MongoDB
         working-directory: ./backend
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: node seedtaskdata.js
 
-      # Run Jest + Supertest
-      - name: Run tests
+      - name: Run Jest tests
         working-directory: ./backend
         env:
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
-        run: npm test
+        run: npm test -- --runInBand

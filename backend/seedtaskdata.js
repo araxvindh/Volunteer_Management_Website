@@ -46,9 +46,6 @@ async function seedDatabase() {
 
         console.log("✅ Test user created");
 
-        // -------------------------
-        // CREATE TEST ADMIN
-        // -------------------------
 
         const admin = await admin_sign.create({
             firstName: "CI",

@@ -9,8 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    steps:
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
 
+    steps:
       - name: Checkout code
         uses: actions/checkout@v5
 
@@ -19,6 +24,14 @@ jobs:
         with:
           node-version: "18"
 
+      - name: Wait for MongoDB
+        run: |
+          until nc -z 127.0.0.1 27017; do
+            echo "Waiting for MongoDB..."
+            sleep 2
+          done
+          echo "MongoDB is ready!"
+
       - name: Install dependencies
         working-directory: ./backend
         run: npm install
@@ -26,11 +39,11 @@ jobs:
       - name: Seed MongoDB
         working-directory: ./backend
         env:
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          MONGODB_URL: mongodb://127.0.0.1:27017/volunteer_management_ci
         run: node seedtaskdata.js
 
-      - name: Run Jest tests
+      - name: Run tests
         working-directory: ./backend
         env:
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          MONGODB_URL: mongodb://127.0.0.1:27017/volunteer_management_ci
         run: npm test -- --runInBand

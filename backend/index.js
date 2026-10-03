@@ -253,9 +253,7 @@ if (require.main === module) {
     connectDB()
         .then(() => {
             app.listen(PORT, () => {
-                console.log(
-                    `Server Started Successfully on port ${PORT}`
-                );
+                console.log(`Server Started Successfully on port ${PORT}`);
             });
         })
         .catch((error) => {
@@ -264,5 +262,7 @@ if (require.main === module) {
         });
 }
 
-module.exports = app;
-module.exports.connectDB = connectDB;
+module.exports = {
+    app,
+    connectDB
+};

@@ -1,84 +1,90 @@
-const request = require("supertest");
 const mongoose = require("mongoose");
-const app = require("../index");
 
-describe("Volunteer Management API", () => {
+const user_sign = require("./models/usersign");
+const admin_sign = require("./models/adminsign");
+const event_Db = require("./models/adminDb");
 
-    test("GET /events should return all events", async () => {
-        const response = await request(app)
-            .get("/events");
+const MONGODB_URL = process.env.MONGODB_URL;
 
-        expect(response.statusCode).toBe(201);
-        expect(Array.isArray(response.body)).toBe(true);
-    });
+if (!MONGODB_URL) {
+    console.error("❌ MONGODB_URL is not defined");
+    process.exit(1);
+}
 
-    test("GET /userdetails should return users", async () => {
-        const response = await request(app)
-            .get("/userdetails");
+async function seedDatabase() {
+    try {
+        console.log("Connecting to MongoDB...");
 
-        expect(response.statusCode).toBe(201);
-        expect(Array.isArray(response.body)).toBe(true);
-    });
+        await mongoose.connect(MONGODB_URL);
 
-    test("POST /usersign should create a user", async () => {
+        console.log("MongoDB connected successfully");
 
-        const user = {
-            firstName: "Test",
-            lastName: "User",
-            email: `test${Date.now()}@gmail.com`,
+        // Remove previous CI test data
+        await user_sign.deleteMany({
+            email: "ciuser@gmail.com"
+        });
+
+        await admin_sign.deleteMany({
+            email: "ciadmin@gmail.com"
+        });
+
+        await event_Db.deleteMany({
+            companyName: "CI Test Company"
+        });
+
+        // Create test user
+        await user_sign.create({
+            firstName: "CI",
+            lastName: "Test User",
+            email: "ciuser@gmail.com",
             password: "Test@123",
-            phoneNumber: "9876543210"
-        };
+            phoneNumber: 9876543210
+        });
 
-        const response = await request(app)
-            .post("/usersign")
-            .send(user);
+        console.log("Test user created");
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty("message");
-        expect(response.body).toHaveProperty("isSignup");
-    });
-
-    test("POST /adminsign should create an admin", async () => {
-
-        const admin = {
-            firstName: "Test Admin",
-            email: `admin${Date.now()}@gmail.com`,
+        // Create test admin
+        const admin = await admin_sign.create({
+            firstName: "CI",
+            lastName: "Admin",
+            email: "ciadmin@gmail.com",
             password: "Admin@123",
-            phoneNumber: "9876543210"
-        };
+            phoneNumber: 9876543211
+        });
 
-        const response = await request(app)
-            .post("/adminsign")
-            .send(admin);
+        console.log("Test admin created");
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty("message");
-        expect(response.body).toHaveProperty("isSignup");
-    });
-
-    test("POST /admin should create an event", async () => {
-
-        const event = {
-            companyName: "Test Company",
+        // Create test event
+        await event_Db.create({
+            companyName: "CI Test Company",
             location: "Chennai",
             place: "St Joseph",
             date: "2026-10-01",
             volunteer: 10,
-            hostId: "test-host",
-            userId: "test-user"
-        };
+            hostId: admin._id.toString(),
+            volunteers: []
+        });
 
-        const response = await request(app)
-            .post("/admin")
-            .send(event);
+        console.log("Test event created");
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty("message");
-        expect(response.body).toHaveProperty("isCreated");
-    });
-});
+        console.log("================================");
+        console.log("DATABASE SEED SUCCESSFUL");
+        console.log("================================");
 
-afterAll(async () => {
-    await mongoose.connection.close();
-});
+        await mongoose.connection.close();
+
+        process.exit(0);
+
+    } catch (error) {
+        console.error("================================");
+        console.error("DATABASE SEED FAILED");
+        console.error(error);
+        console.error("================================");
+
+        await mongoose.connection.close();
+
+        process.exit(1);
+    }
+}
+
+seedDatabase();

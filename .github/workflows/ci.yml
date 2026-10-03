@@ -26,10 +26,12 @@ jobs:
 
       - name: Wait for MongoDB
         run: |
+          echo "Waiting for MongoDB..."
+
           until nc -z 127.0.0.1 27017; do
-            echo "Waiting for MongoDB..."
             sleep 2
           done
+
           echo "MongoDB is ready!"
 
       - name: Install dependencies

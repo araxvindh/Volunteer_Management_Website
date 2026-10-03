@@ -14,14 +14,15 @@ const PORT = 3001;
 
 dotenv.config();
 
-mdb.connect(process.env.MONGODB_URL)
-    .then(() => {
+const connectDB = async () => {
+    try {
+        await mdb.connect(process.env.MONGODB_URL);
         console.log("MongoDB Connection Successful");
-    })
-    .catch((err) => {
+    } catch (err) {
         console.error("MongoDB Connection Failed:", err);
-    });
-
+        throw err;
+    }
+};
 
     app.post("/usersign", async(req, res) => {
         try {
@@ -248,9 +249,20 @@ app.delete("/events/:id", async (req, res) => {
 });
 
 
-
 if (require.main === module) {
-    app.listen(PORT, () => console.log("Server Started Successfully"));
+    connectDB()
+        .then(() => {
+            app.listen(PORT, () => {
+                console.log(
+                    `Server Started Successfully on port ${PORT}`
+                );
+            });
+        })
+        .catch((error) => {
+            console.error("Server failed to start:", error);
+            process.exit(1);
+        });
 }
 
 module.exports = app;
+module.exports.connectDB = connectDB;

@@ -3,6 +3,7 @@ import "../css/login.css";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 const Login = () => {
         const [email,setEmail]=useState("");
         const [password,setPass]=useState("");
@@ -12,7 +13,7 @@ const Login = () => {
         const handleuserLogin = async(event)=>
         {
             event.preventDefault();
-            const req= await axios.post("http://localhost:3001/userlogin",
+            const req= await axios.post(`${API_URL}/userlogin`,
                 {
                     email:email,
                     password:password
@@ -36,7 +37,7 @@ const Login = () => {
         const handleadminLogin = async(event)=>
             {
                 event.preventDefault();
-                const req= await axios.post("http://localhost:3001/adminlogin",
+                const req= await axios.post(`${API_URL}/adminlogin`,
                     {
                         email:email1,
                         password:password1

@@ -3,7 +3,7 @@ import "../css/usersign.css";
 import Navbar from "./Navbar";
 import {useState} from 'react';
 import axios from 'axios'
-
+const API_URL = import.meta.env.VITE_API_URL;
 
 const UserSignin = () => 
 {
@@ -17,7 +17,7 @@ const UserSignin = () =>
         const handleuserSign =async(event)=>
         {
                 event.preventDefault();
-                const req = await axios.post("http://localhost:3001/usersign",{
+                const req = await axios.post(`${API_URL}/usersign`,{
 
                     firstName:firstName,
                     lastName:lastName,

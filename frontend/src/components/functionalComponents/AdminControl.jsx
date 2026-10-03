@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import '../css/adminControl.css';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminControl = () => {
     const [showForm, setShowForm] = useState(false);
@@ -19,7 +20,7 @@ const AdminControl = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/events");
+                const response = await axios.get(`${API_URL}/events`);
                 setEvents(response.data);
             } catch (error) {
                 console.error("Error fetching events:", error);
@@ -31,7 +32,7 @@ const AdminControl = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/userdetails");
+                const response = await axios.get(`${API_URL}/userdetails`);
                 setUsers(response.data);
             } catch (error) {
                 console.error("Error fetching users:", error);
@@ -43,7 +44,7 @@ const AdminControl = () => {
     const handleCreate = async (event) => {
         event.preventDefault();
         try {
-            const req = await axios.post("http://localhost:3001/admin", {
+            const req = await axios.post(`${API_URL}/admin`, {
                 companyName,
                 location,
                 place,
@@ -65,7 +66,7 @@ const AdminControl = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/events/${id}`);
+            await axios.delete(`${API_URL}/events/${id}`);
             setEvents(events.filter(event => event._id !== id));
             alert("Event deleted successfully");
         } catch (error) {
@@ -86,7 +87,7 @@ const AdminControl = () => {
     const handleUpdate = async (id) => {
         try {
             const updatedEvent = { location, place, volunteer };
-            await axios.put(`http://localhost:3001/events/${id}`, updatedEvent);
+            await axios.put(`${API_URL}/events/${id}`, updatedEvent);
             setEvents(events.map(event => (event._id === id ? { ...event, ...updatedEvent } : event)));
             setEditMode(null);
             alert("Event updated successfully");

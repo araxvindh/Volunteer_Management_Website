@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import '../css/userjoin.css';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const UserJoin = () => {
   const [events, setEvents] = useState([]);
@@ -11,7 +12,7 @@ const UserJoin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/events");
+        const response = await axios.get(`${API_URL}/events`);
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -29,7 +30,7 @@ const UserJoin = () => {
   const handleJoin = async (eventId, index) => {
     try {
       const userId = localStorage.getItem('user_id');
-      await axios.put(`http://localhost:3001/events/${eventId}/join`, { userId });
+      await axios.put(`${API_URL}/events/${eventId}/join`, { userId });
 
       setEvents((prevEvents) =>
         prevEvents.map((event, i) =>

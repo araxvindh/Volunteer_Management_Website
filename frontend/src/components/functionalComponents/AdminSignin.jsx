@@ -3,6 +3,7 @@ import "../css/adminsign.css";
 import Navbar from "./Navbar";
 import {useState} from 'react';
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL;
 const AdminSignin = () => {
         const [firstName,setFName]=useState("");
         const [email,setEmail]=useState("");
@@ -12,7 +13,7 @@ const AdminSignin = () => {
         const handleadminSign =async(event)=>
         {
                 event.preventDefault();
-                const req = await axios.post("http://localhost:3001/adminsign",{
+                const req = await axios.post(`${API_URL}/adminsign`,{
 
                     firstName:firstName,
                     email:email,

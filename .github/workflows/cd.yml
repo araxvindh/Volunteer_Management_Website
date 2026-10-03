@@ -1,0 +1,20 @@
+name: MERN CD
+
+on:
+  push:
+    branches: ["master"]
+
+  
+  jobs:
+    deploy:
+      runs-on: ubuntu-latest
+      timeout-minutes: 10
+
+      steps:
+        - name: deploy via ssh
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.EC2_HOST }}
+            username: ${{ secrets.EC2_USERNAME }}
+            key: ${{ secrets.EC2_SSH_KEY }}
+            script: whoami
